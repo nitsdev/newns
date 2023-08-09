@@ -468,7 +468,7 @@ include("./connect.php");
                     <p></p>
                 </div>
                 <div class="col-md-7">
-                    <form action="">
+                    <form method="post" action="">
                         <h4 class="mb-4">Drop Us A Line</h4>
                         <div class="form-row">
                             <div class="form-group col-sm-4">
@@ -488,7 +488,8 @@ include("./connect.php");
 
                             </div>
                             <div class="form-group col-12 mb-0">
-                                <button type="submit" class="btn btn-primary rounded w-md mt-3" name="send">Send</button>
+                                <!--<button type="submit" class="btn btn-primary rounded w-md mt-3" name="send">Send</button>-->
+                                <input type="button" value="Send" name="send">
                             </div>                          
                         </div>                          
                     </form>
@@ -517,84 +518,3 @@ include("./connect.php");
 
 </body>
 </html>
-<?php if (isset($_POST['send'])) {
-    $name = $_POST['name'];
-    $Email = $_POST['Email'];
-    $subject = $_POST['subject'];
-    $contact = $_POST['contact'];
-    $message = $_POST['message'];
-
-    //insert query
-    $insert_query = "insert into `enquiry` (name,Email,subject,contact,date,message) values ('$name','$Email','$subject','$contact','$message')";
-    $result_query = mysqli_query($con, $insert_query);
-
-    if ($result_query) {
-        $name = $_POST['name'];
-        $Email = $_POST['Email'];
-        $subject = $_POST['subject'];
-        $contact = $_POST['contact'];
-        $message = $_POST['message'];
-        $toEmail = 'nites1608@gmail.com';
-        $subject = 'Enquiry';
-        $message = '
-<html>
-<head>
-<title>Thank You for Enquiry</title>
-</head>
-<body>
-<p>Dear '. $name .',<br>
-
-We are thrilled that you have chosen to us! We appreciate your trust in our company and are committed to providing you with the best possible service.<br><br>
-
-Once again, thank you for choosing our company for your needs. We look forward to serving you and exceeding your expectations!</p><br><br>
-
-</body>
-</html>
-';
-
-$message1 = '
-<html>
-<head>
-<title>Enquiry Details</title>
-</head>
-<body>
-
-<table>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Product</th>
-<th>Purchased at</th>
-<th>Purchased from</th>
-</tr>
-<tr>
-<td>'. $name .'</td>
-<td>'. $Email .'</td>
-<td>'. $subject .'</td>
-<td>'. $contact .'</td>
-<td>'. $message .'</td>
-</tr>
-</table>
-</body>
-</html>
-';
-        
-            // Always set content-type when sending HTML email
-$headers = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type:text/html;charset=UTF-8' . "\r\n";
-
-// More headers
-$headers .= 'From: <newnessmarketing.com>' . "\r\n";
-$headers .= 'Cc: newnessmarketing.com' . "\r\n";
-            
-        //echo $mailHeaders;
-        if (mail($user_email,$subject,$message,$headers)) {
-            $message = 'Sent successfully';
-        }
-        if (mail($toEmail, $subject,$message1,$headers)) {
-            $message = 'Sent successfully';
-        }
-
-        echo "<script>window.open('#','_self')</script>";
-    }
-} ?>
